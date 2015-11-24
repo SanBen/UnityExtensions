@@ -1,2 +1,2 @@
 # UnityExtensions
-A collections of extension methods for Unity types
+A collection of extension methods for Unity types
