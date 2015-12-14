@@ -1,25 +1,23 @@
-﻿using UnityEngine;
+﻿using System;
 
 namespace Extensions
 {
-  public static class IntExtensions
-  {
-    /// <summary>
-    /// Returns a round Integer except this one.
-    /// </summary>
-    /// <param name="exception"></param>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    /// <returns></returns>
-    public static int GetRandomWithException(this int exception, int from, int to)
+    public static class IntExtensions
     {
-      int newRandom = Random.Range(from, to);
+        /// <summary>
+        /// Returns an int with this one excluded.
+        /// </summary>
+        [Obsolete("GetRandomWithException is deprecated please use NextExclusive with a System.Random object")]
+        public static int GetRandomWithException(this int exception, int from, int to)
+        {
+            int newRandom = UnityEngine.Random.Range(from, to);
 
-      while (exception == newRandom) {
-        newRandom = Random.Range(from, to);
-      }
+            while (exception == newRandom)
+            {
+                newRandom = UnityEngine.Random.Range(from, to);
+            }
 
-      return newRandom;
+            return newRandom;
+        }
     }
-  }
 }

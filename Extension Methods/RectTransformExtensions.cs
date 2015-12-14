@@ -92,5 +92,68 @@ namespace Extensions
             float yOffset = trans.GetHeight() / 2;
             return new Vector3(trans.position.x + xOffset, trans.position.y + yOffset, trans.position.z);
         }
+		
+				/// <summary>
+		/// Sets the position of the RectTransform based on a percentage in relation to the referenceTransform.
+		/// e.g. Passing in (0.5,0.5) will position the RectTransform exactly in the middle of the referenceTransform.
+		/// Note that values under 0 and over 1 are also possible.
+		/// </summary>
+		/// <param name="rectTransform">Rect transform.</param>
+		/// <param name="positionPercentage">Position percentage.</param>
+		/// <param name="referenceTransform">Reference transform.</param>
+		public static void SetPositionRelative (this RectTransform rectTransform, Vector2 positionPercentage, RectTransform referenceTransform = null) {
+			if (referenceTransform == null) {
+				referenceTransform = rectTransform.parent.GetComponent<RectTransform> ();
+				if (referenceTransform == null) {
+					Debug.LogError ("You must either specify an explicit reference Transform, or the RectTransform must have a parent RectTransform!");
+					return;
+				}
+			}
+			Vector2 parentCenter = referenceTransform.rect.center;
+			Vector2 parentDimensions = new Vector2 (referenceTransform.rect.width, referenceTransform.rect.height);
+			Vector2 offset = new Vector2 (parentDimensions.x * positionPercentage.x, parentDimensions.y * positionPercentage.y);
+			Vector3 targetPosition = new Vector3 (parentCenter.x + offset.x, parentCenter.y + offset.y, 0f);
+			rectTransform.position = targetPosition;
+			Debug.Log ("Object:" + rectTransform.name + ", PosPercentage:" + positionPercentage + ", ParentMin: " + parentCenter + ", Offset: " + offset + ", TargetPosition: " + targetPosition);
+		}
+		
+		/// <summary>
+		/// Interpolates between AnchorMin and AnchorMax based on Pivot.
+		/// e.g. AnchorMin(0.25,0.25), AnchorMax(0.75,0.75), Pivot(0.2,0.8) will return (0.35,0.65)
+		/// </summary>
+		/// <returns>The anchor position at pivot.</returns>
+		/// <param name="rectTransform">Rect transform.</param>
+		/// <param name="referenceTransform">Reference transform.</param>
+		public static Vector2 GetAnchorPositionAtPivot (this RectTransform rectTransform, RectTransform referenceTransform = null) {
+			if (referenceTransform == null) {
+				referenceTransform = rectTransform.parent.GetComponent<RectTransform> ();
+				if (referenceTransform == null) {
+					Debug.LogError ("You must either specify an explicit reference Transform, or the RectTransform must have a parent RectTransform!");
+					return Vector2.zero;
+				}
+			}
+			Vector2 pivot = rectTransform.pivot;
+			Vector2 anchorMin = rectTransform.anchorMin;
+			Vector2 anchorMax = rectTransform.anchorMax;
+
+			Vector2 simulatedAnchoredPosition = new Vector2 (
+			anchorMin.x + (anchorMax.x - anchorMin.x) * pivot.x,
+			anchorMin.y + (anchorMax.y - anchorMin.y) * pivot.y
+			);
+			return simulatedAnchoredPosition;
+		}
+		
+		public static void StretchToAnchoredPosition (this RectTransform rectTransform) {
+			rectTransform.sizeDelta = Vector2.zero;
+			rectTransform.anchoredPosition = Vector2.zero;
+		}
+		
+		public static void FitToParent (this RectTransform rectTransform) {
+			rectTransform.anchorMin = Vector2.zero;
+			rectTransform.anchorMax = Vector2.one;
+			rectTransform.offsetMin = Vector2.zero;
+			rectTransform.offsetMax = Vector2.zero;
+			rectTransform.localScale = Vector3.one;
+		}
     }
 }

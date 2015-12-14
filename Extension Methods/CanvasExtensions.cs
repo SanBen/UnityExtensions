@@ -15,8 +15,10 @@ namespace Extensions
 
             //pos between 0-1
             var viewport_position = camera.WorldToViewportPoint(worldPosition);
+
             var canvas_rect = canvas.pixelRect;
             
+            //TODO: Use GUIUtility instead
             //Need to adjust due to canvas rect center is origin (0,0) whereas viewport bottom left
             return new Vector2((viewport_position.x * canvas_rect.width) - (canvas_rect.width * 0.5f),
                                (viewport_position.y * canvas_rect.height) - (canvas_rect.height * 0.5f));
@@ -50,6 +52,7 @@ namespace Extensions
                 camera = Camera.main;
             }
 
+            //TODO: Use GUIUtility instead
             //Convert to canvas coords
             float x = screenPosition.x / Screen.width * canvas.pixelRect.width;
             float y = screenPosition.y / Screen.height * canvas.pixelRect.height;
