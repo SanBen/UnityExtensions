@@ -7,8 +7,8 @@
     <ProjectGuid>{DCE6942E-120E-4AA6-8528-09AD58A78EBC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ExtensionMethods2</RootNamespace>
-    <AssemblyName>ExtensionMethods2</AssemblyName>
+    <RootNamespace>ExtensionMethods</RootNamespace>
+    <AssemblyName>ExtensionMethods</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
