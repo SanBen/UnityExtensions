@@ -5,6 +5,7 @@
   <img alt="Appveyor Build Status"
        src="https://ci.appveyor.com/api/projects/status/838ohs7sbe633i89?svg=true"/>
 </a>
+[![Build Status](https://travis-ci.org/SanBen/UnityExtensions.svg?branch=master)](https://travis-ci.org/SanBen/UnityExtensions)
 
 
 A collection of extension methods for Unity types
